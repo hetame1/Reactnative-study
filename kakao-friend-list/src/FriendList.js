@@ -4,6 +4,8 @@ import Profile from "./Profile";
 import Margin from "./Margin";
 
 const FriendList = (props) => {
+  if (!props.isOpened) return null;
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {props.data.map((profile, index) => {
