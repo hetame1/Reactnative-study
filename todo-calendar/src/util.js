@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const fillEmptyColumns = (columns, start, end) => {
   const filledColumns = columns.slice(0);
 
@@ -45,4 +47,37 @@ export const getCalendarColumns = (now) => {
   // console.log('columns 최종', columns);
   // ["10.31", "11.1", ..., "11.30", "12.1", "12.2", "12.3"]
   return filledColumns;
+};
+
+/**
+ * @param day 0 ~ 6
+ * @return 일 ~ 월
+ */
+const dayTexts = ["일", "월", "화", "수", "목", "금", "토"];
+export const getDayText = (day) => {
+  return dayTexts[day];
+
+  // switch (day) {
+  //   case 0:
+  //     return "일";
+  //   case 1:
+  //     return "월";
+  //   case 2:
+  //     return "화";
+  //   case 3:
+  //     return "수";
+  //   case 4:
+  //     return "목";
+  //   case 5:
+  //     return "금";
+  //   case 6:
+  //     return "토";
+  //   default:
+  //     return "";
+  // }
+};
+
+export const getDayColor = (day) => {
+  const color = day === 0 ? "#e67639" : day === 6 ? "#5872d1" : "#2b2b2b";
+  return color;
 };
