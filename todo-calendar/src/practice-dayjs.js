@@ -1,6 +1,12 @@
-import React from "react";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+dayjs.extend(isBetween);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
-const PracticcDayJs = () => {
+export const runPracticeDayjs = () => {
   const hour = new Date().getHours();
   // console.log('hour', hour);
 
@@ -53,8 +59,4 @@ const PracticcDayJs = () => {
   // );
   // console.log("23. diff minute a,b", dayjs(aDate).diff(bDate, "minute"));
   // console.log("24. diff minute b,a", dayjs(bDate).diff(aDate, "minute"));
-
-  return <div>PracticcDayJs</div>;
 };
-
-export default PracticcDayJs;
