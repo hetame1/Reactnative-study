@@ -63,8 +63,13 @@ const useTodoList = (selectedDate) => {
     setTodoList(newTodoList);
   };
 
+  const filterTodoList = todoList.filter((todo) => {
+    const isSameDate = dayjs(todo.date).isSame(selectedDate, "day");
+    return isSameDate;
+  });
+
   return {
-    todoList,
+    filterTodoList,
     input,
     setInput,
     addTodo,

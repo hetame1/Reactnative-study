@@ -15,12 +15,7 @@ import {
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 
-import {
-  ITEM_WIDTH,
-  bottomSpace,
-  getCalendarColumns,
-  statusBarHeight,
-} from "./src/util";
+import { ITEM_WIDTH, getCalendarColumns, statusBarHeight } from "./src/util";
 import { runPracticeDayjs } from "./src/practice-dayjs";
 import useCalendar from "./src/hook/use-calendar";
 import useTodoList from "./src/hook/use-todo-list";
@@ -43,7 +38,7 @@ export default function App() {
     setSelectedDate,
   } = useCalendar(now);
 
-  const { todoList, input, setInput, addTodo, removeTodo, toggleTodo } =
+  const { filterTodoList, input, setInput, addTodo, removeTodo, toggleTodo } =
     useTodoList(selectedDate);
 
   const onPressLeftArrow = subtractMonth;
@@ -178,7 +173,7 @@ export default function App() {
         <>
           <FlatList
             ref={FlatListRef}
-            data={todoList}
+            data={filterTodoList}
             ListHeaderComponent={ListHeaderComponent}
             contentContainerStyle={{
               paddingTop: statusBarHeight + 50,
