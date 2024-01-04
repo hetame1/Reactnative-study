@@ -3,7 +3,14 @@ import { TextInput, TouchableOpacity, View } from "react-native";
 import { ITEM_WIDTH, bottomSpace } from "./util";
 import { AntDesign } from "@expo/vector-icons";
 
-const AddTodoInput = ({ value, onChangeText, placeholder, onPressAdd }) => {
+const AddTodoInput = ({
+  value,
+  onChangeText,
+  placeholder,
+  onPressAdd,
+  onSubmitEditing,
+  onFocus,
+}) => {
   return (
     <View
       style={{
@@ -22,6 +29,9 @@ const AddTodoInput = ({ value, onChangeText, placeholder, onPressAdd }) => {
           padding: 5,
           color: "#595959",
         }}
+        onSubmitEditing={onSubmitEditing}
+        blurOnSubmit={false}
+        onFocus={onFocus}
       />
       <TouchableOpacity
         style={{
