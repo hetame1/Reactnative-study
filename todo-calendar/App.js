@@ -38,8 +38,15 @@ export default function App() {
     setSelectedDate,
   } = useCalendar(now);
 
-  const { filterTodoList, input, setInput, addTodo, removeTodo, toggleTodo } =
-    useTodoList(selectedDate);
+  const {
+    todoList,
+    filterTodoList,
+    input,
+    setInput,
+    addTodo,
+    removeTodo,
+    toggleTodo,
+  } = useTodoList(selectedDate);
 
   const onPressLeftArrow = subtractMonth;
   const onPressRightArrow = addMonth;
@@ -81,6 +88,7 @@ export default function App() {
   const ListHeaderComponent = () => (
     <View>
       <Calendar
+        todoList={todoList}
         selectedDate={selectedDate}
         onPressLeftArrow={onPressLeftArrow}
         onPressRightArrow={onPressRightArrow}

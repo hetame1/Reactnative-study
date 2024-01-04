@@ -6,7 +6,15 @@ import dayjs from "dayjs";
 import { getDayColor, getDayText } from "./util";
 
 const columnSize = 35;
-const Column = ({ text, color, opacity, disabled, onPress, isSelected }) => {
+const Column = ({
+  text,
+  color,
+  opacity,
+  disabled,
+  onPress,
+  isSelected,
+  hasTodo,
+}) => {
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -24,6 +32,7 @@ const Column = ({ text, color, opacity, disabled, onPress, isSelected }) => {
         style={{
           color,
           opacity,
+          fontWeight: hasTodo ? "bold" : "normal",
         }}
       >
         {text}
@@ -50,6 +59,7 @@ const Calendar = ({
   onPressHeaderDate,
   onPressDate,
   columns,
+  todoList,
 }) => {
   // 헤더 ( 요일, 날짜, 화살표 )
   const ListHeaderComponent = () => {
@@ -115,6 +125,9 @@ const Calendar = ({
     const onPress = () => onPressDate(date);
 
     const isSelected = dayjs(date).isSame(selectedDate, "date");
+    const hasTodo = todoList.find((todo) =>
+      dayjs(todo.date).isSame(dayjs(date), "date")
+    );
 
     return (
       <Column
@@ -123,6 +136,7 @@ const Calendar = ({
         opacity={isCurrentMonth ? 1 : 0.4}
         onPress={onPress}
         isSelected={isSelected}
+        hasTodo={hasTodo}
       />
     );
   };

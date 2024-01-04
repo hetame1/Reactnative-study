@@ -70,6 +70,7 @@ const useTodoList = (selectedDate) => {
 
   return {
     filterTodoList,
+    todoList,
     input,
     setInput,
     addTodo,
