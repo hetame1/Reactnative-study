@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
+  Alert,
   FlatList,
   Image,
   Keyboard,
@@ -48,9 +49,39 @@ export default function App() {
   const onPressLeftArrow = subtractMonth;
   const onPressRightArrow = addMonth;
 
+  const FlatListRef = useRef();
+
   useEffect(() => {
     runPracticeDayjs();
   }, []);
+
+  const scrollToEnd = () => {
+    setTimeout(() => {
+      FlatListRef.current?.scrollToEnd();
+    }, 200);
+  };
+
+  const onPressAdd = () => {
+    if (input === "") {
+      Alert.alert("투두를 입력해주세요.");
+      return;
+    }
+
+    addTodo({
+      content: input,
+      date: selectedDate,
+    });
+
+    scrollToEnd();
+
+    setInput("");
+  };
+
+  const onSubmitEditing = onPressAdd;
+
+  const onFocus = () => {
+    scrollToEnd();
+  };
 
   const ListHeaderComponent = () => (
     <View>
@@ -80,8 +111,29 @@ export default function App() {
   const renderItem = ({ item: todo }) => {
     const isSuccess = todo.isSuccess;
 
+    const onPress = () => {
+      toggleTodo(todo.id);
+    };
+
+    const onLongPress = () => {
+      Alert.alert("삭제하시겠습니까?", "", [
+        {
+          text: "취소",
+          onPress: () => {},
+        },
+        {
+          text: "삭제",
+          onPress: () => {
+            removeTodo(todo.id);
+          },
+        },
+      ]);
+    };
+
     return (
-      <View
+      <Pressable
+        onPress={onPress}
+        onLongPress={onLongPress}
         style={{
           flexDirection: "row",
           width: ITEM_WIDTH,
@@ -108,7 +160,7 @@ export default function App() {
           size={17}
           color={isSuccess ? "#595959" : "#bfbfbf"}
         />
-      </View>
+      </Pressable>
     );
   };
 
@@ -125,19 +177,23 @@ export default function App() {
       >
         <>
           <FlatList
+            ref={FlatListRef}
             data={todoList}
             ListHeaderComponent={ListHeaderComponent}
             contentContainerStyle={{
-              paddingTop: statusBarHeight + 20,
+              paddingTop: statusBarHeight + 50,
             }}
             renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
           />
 
           <AddTodoInput
             value={input}
             onChangeText={setInput}
             placeholder={`${dayjs(selectedDate).format("MM.D")}에 추가할 투두`}
-            // onPressAdd={onPressAdd}
+            onPressAdd={onPressAdd}
+            onSubmitEditing={onSubmitEditing}
+            onFocus={onFocus}
           />
         </>
       </KeyboardAvoidingView>
